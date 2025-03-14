@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Web_App_CarRentingSystem.Data;
 using Web_App_CarRentingSystem.Infrastructure;
 
@@ -9,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<CarRentingDbContext>(options =>
-    options.UseSqlServer(connectionString));
+   options.UseSqlServer(connectionString + ";TrustServerCertificate=True", sqlOptions => sqlOptions.EnableRetryOnFailure()));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -33,8 +34,6 @@ else
     app.UseHsts();
 }
 
-
-
 app.UseHttpsRedirection();
 app.UseRouting();
 
@@ -43,11 +42,8 @@ app.UseAuthorization();
 app.MapStaticAssets();
 
 app.MapDefaultControllerRoute();
-    
 
 app.MapRazorPages()
    .WithStaticAssets();
-
-
 
 app.Run();
