@@ -15,16 +15,16 @@ namespace Web_App_CarRentingSystem.Infrastructure
                 var data = services.GetRequiredService<CarRentingDbContext>();
                 data.Database.Migrate();
 
-               SeedCategoies(data);
+               SeedCategories(data);
             }
             
             
             return app;
         }
 
-        private static void SeedCategoies(CarRentingDbContext data)
+        private static void SeedCategories(CarRentingDbContext data)
         {
-            if (!data.Categories.Any())
+            if (data.Categories.Any())
             {
                 return;
             }

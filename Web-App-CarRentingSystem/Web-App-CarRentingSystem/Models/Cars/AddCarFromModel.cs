@@ -22,7 +22,7 @@ namespace Web_App_CarRentingSystem.Models.Cars
         public int Year { get; init; }
 
         [Required]
-        [StringLength(CarDescriptionMaxLength, MinimumLength = CarBrandMinLength)]
+     
         public string Description { get; init; }
 
         [Display(Name = "Category")]

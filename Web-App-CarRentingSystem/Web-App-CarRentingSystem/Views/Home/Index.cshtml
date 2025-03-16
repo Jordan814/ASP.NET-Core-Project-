@@ -1,8 +1,103 @@
-﻿@{
+﻿@model IndexViewModel
+
+
+@{
     ViewData["Title"] = "Car renting";
 }
+
+@{
+    var cars = Model.Cars;
+
+    var firstCar = cars.Any() ? cars[0] : null;
+
+    var secondCar = cars.Count() > 1 ? cars[1] : null;
+
+
+    var thirdCar = cars.Count() > 2 ? cars[2] : null;
+}
+
+@if (cars.Any())
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Car Renting System</h1>
+        <p class="lead">Just add your car.</p>
+        <hr class="my-4">
+        <p class="lead">
+            <a asp-controller="Cars" asp-action ="Add" class="btn btn-primary btn-lg"  role="button">Add Car</a>
+        </p>
+    </div>
+}
+
+<div class="mb-5"></div>
+
+<div id="carouselExample" class="carousel slide ">
+    <div class="carousel-inner">
+        @if (firstCar != null)
+        {
+            <div class="carousel-item active">
+                <img src="@firstCar.ImageUrl" class="d-block w-100" alt="@firstCar.Brand @firstCar.Model">
+                <div class=" carousel-caption d-none d-md-block">
+                    <h5>
+                        <a asp-controller="Cars" asp-action="Details" asp-route-id="@firstCar.Id">@firstCar.Brand @firstCar.Model @firstCar.Year</a>
+                    </h5>
+                </div>
+            </div>
+        }
+       
+        @if (secondCar != null)
+        {
+            <div class="carousel-item active">
+                <img src="@secondCar.ImageUrl" class="d-block w-100" alt="@secondCar.Brand @secondCar.Model">
+                <div class=" carousel-caption d-none d-md-block">
+                    <h5>
+                        <a asp-controller="Cars" asp-action="Details" asp-route-id="@secondCar.Id">@secondCar.Brand @secondCar.Model @secondCar.Year</a>
+                    </h5>
+                </div>
+            </div>
+        }
+        
+        @if (thirdCar != null)
+        {
+            <div class="carousel-item active">
+                <img src="@thirdCar.ImageUrl" class="d-block w-100" alt="@thirdCar.Brand @thirdCar.Model">
+                <div class=" carousel-caption d-none d-md-block">
+                    <h5>
+                        <a asp-controller="Cars" asp-action="Details" asp-route-id="@thirdCar.Id">@thirdCar.Brand @thirdCar.Model @thirdCar.Year</a>
+                    </h5>
+                </div>
+            </div>
+        }
+       
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="mb-5"></div>
+
+<div class="jumbotron">
+    <div class="row">
+        <h2 class="col-md-4 text-center" >
+            @Model.TotalCars Total Cars
+        </h2>
+        <h2 class="col-md-4 text-center">
+            @Model.TotalUsers Users
+        </h2>
+        
+        <h2 class="col-md-4 text-center">
+            @Model.TotalRents Rents
+        </h2>
+
+    </div>
 </div>
