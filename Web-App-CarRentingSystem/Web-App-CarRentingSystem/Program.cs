@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Web_App_CarRentingSystem.Data;
 using Web_App_CarRentingSystem.Infrastructure;
+using Web_App_CarRentingSystem.Services.Cars;
+using Web_App_CarRentingSystem.Services.Statistics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<CarRentingDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+builder.Services.AddTransient<ICarService, CarService>();
+
 
 var app = builder.Build();
 

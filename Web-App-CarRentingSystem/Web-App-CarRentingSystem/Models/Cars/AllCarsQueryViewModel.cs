@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Web_App_CarRentingSystem.Services.Cars;
 
 namespace Web_App_CarRentingSystem.Models.Cars
 {
@@ -9,7 +10,7 @@ namespace Web_App_CarRentingSystem.Models.Cars
 
         public string Brand { get; init; }
 
-        public IEnumerable<CarListingViewModel> Cars { get; set; }
+        public IEnumerable<CarServiceModel> Cars { get; set; }
 
         public IEnumerable<string> Brands { get; set; }
 
