@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Web_App_CarRentingSystem.Data;
+using Web_App_CarRentingSystem.Data.Models;
 using Web_App_CarRentingSystem.Infrastructure;
 using Web_App_CarRentingSystem.Services.Cars;
+using Web_App_CarRentingSystem.Services.Dealers;
 using Web_App_CarRentingSystem.Services.Statistics;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,13 +17,22 @@ builder.Services.AddDbContext<CarRentingDbContext>(options =>
    options.UseSqlServer(connectionString + ";TrustServerCertificate=True", sqlOptions => sqlOptions.EnableRetryOnFailure()));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<CarRentingDbContext>();
+builder.Services.AddDefaultIdentity<User>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.SignIn.RequireConfirmedAccount = false;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<CarRentingDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 builder.Services.AddTransient<ICarService, CarService>();
-
+builder.Services.AddTransient<IDealerService, DealerService>();
 
 var app = builder.Build();
 
