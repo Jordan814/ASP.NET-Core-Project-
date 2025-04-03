@@ -1,4 +1,4 @@
-﻿namespace Web_App_CarRentingSystem.Services.Cars
+﻿namespace Web_App_CarRentingSystem.Services.Cars.Models
 {
     public class CarDetailsServiceModel : CarServiceModel
     {

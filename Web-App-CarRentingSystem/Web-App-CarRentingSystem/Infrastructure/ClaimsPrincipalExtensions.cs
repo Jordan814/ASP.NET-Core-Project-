@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
-using static Web_App_CarRentingSystem.WebConstants;
+using Web_App_CarRentingSystem.Areas.Admin;
+using static Web_App_CarRentingSystem.Areas.Admin.AdminConstants;
+
 
 namespace Web_App_CarRentingSystem.Infrastructure
 {
@@ -10,6 +12,6 @@ namespace Web_App_CarRentingSystem.Infrastructure
             => user.FindFirst(ClaimTypes.NameIdentifier).Value;
 
         public static bool IsAdmin(this ClaimsPrincipal user)
-            => user.IsInRole(WebConstants.AdministratorRoleName);
+            => user.IsInRole(AdminConstants.AdministratorRoleName);
     }
 }

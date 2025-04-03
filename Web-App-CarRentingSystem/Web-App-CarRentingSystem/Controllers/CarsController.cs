@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web_App_CarRentingSystem.Data;
 using Web_App_CarRentingSystem.Data.Models;
@@ -15,9 +16,11 @@ namespace Web_App_CarRentingSystem.Controllers
 
         private readonly IDealerService dealers;
         private readonly ICarService cars;
+        private readonly IMapper mapper;
 
-        public CarsController(ICarService cars, IDealerService dealers)
+        public CarsController(ICarService cars, IDealerService dealers, IMapper mapper)
         {
+            this.mapper = mapper;
             this.dealers = dealers;
             this.cars = cars;
         }
@@ -63,8 +66,8 @@ namespace Web_App_CarRentingSystem.Controllers
                 Categories = this.cars.AllCarCategories()
             });
         }
-        [HttpPost]
         [Authorize]
+        [HttpPost]
         public IActionResult Add(CarFromModel car)
         {
             var dealerId = this.dealers.IdByUser(this.User.GetId());
@@ -74,7 +77,7 @@ namespace Web_App_CarRentingSystem.Controllers
                 return RedirectToAction(nameof(DealersController.Become), "Dealers");
             }
 
-            if (this.cars.CategoryExists(car.CategoryId))
+            if (!this.cars.CategoryExists(car.CategoryId))
             {
                 this.ModelState.AddModelError(nameof(car.CategoryId), "Category does not exist.");
             }
@@ -82,11 +85,14 @@ namespace Web_App_CarRentingSystem.Controllers
             if (!ModelState.IsValid)
             {
                 car.Categories = this.cars.AllCarCategories();
-
                 return View(car);
             }
 
-                this.cars.Create(
+            // Log before calling Create method
+            Console.WriteLine("Creating car with details: Brand={0}, Model={1}, Year={2}, Image={3}, Description={4}, CategoryId={5}, DealerId={6}",
+                car.Brand, car.Model, car.Year, car.Image, car.Description, car.CategoryId, dealerId);
+
+            this.cars.Create(
                 car.Brand,
                 car.Model,
                 car.Year,
@@ -95,9 +101,12 @@ namespace Web_App_CarRentingSystem.Controllers
                 car.CategoryId,
                 dealerId);
 
+            // Log after successful creation
+            Console.WriteLine("Car created successfully");
 
             return RedirectToAction(nameof(All));
         }
+
 
         [Authorize]
         public IActionResult Edit(int id)
@@ -114,16 +123,10 @@ namespace Web_App_CarRentingSystem.Controllers
             {
                 return Unauthorized();
             }
-            var carForm = new CarFromModel
-            {
-                Brand = car.Brand,
-                Model = car.Model,
-                Description = car.Description,
-                Year = car.Year,
-                Image = car.ImageUrl,
-                CategoryId = car.CategoryId,
-                Categories = this.cars.AllCarCategories()
-            };
+
+            var carForm = this.mapper.Map<CarFromModel>(car);
+
+            carForm.Categories = this.cars.AllCarCategories();
             return View(carForm);
         }
 

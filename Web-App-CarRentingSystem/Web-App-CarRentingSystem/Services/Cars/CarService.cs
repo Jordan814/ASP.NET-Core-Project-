@@ -4,15 +4,20 @@ using Web_App_CarRentingSystem.Models.Cars;
 using Web_App_CarRentingSystem.Data;
 using System.Linq;
 using Web_App_CarRentingSystem.Data.Models;
+using Web_App_CarRentingSystem.Services.Cars.Models;
+using AutoMapper.QueryableExtensions;
+using AutoMapper;
 
 namespace Web_App_CarRentingSystem.Services.Cars
 {
     public class CarService : ICarService
     {
        private readonly CarRentingDbContext data;
+        private readonly IMapper mapper;
 
-        public CarService(CarRentingDbContext data)
+        public CarService(CarRentingDbContext data, IMapper mapper)
         {
+            this.mapper = mapper;
             this.data = data;
         }
         public CarQueryServiceModel All(string brand, string searchTerm, CarSorting sorting, int currentPage, int carsPerPage)
@@ -98,18 +103,7 @@ namespace Web_App_CarRentingSystem.Services.Cars
         public CarDetailsServiceModel Details(int id)
         {
             return this.data.Cars.Where(c => c.Id == id)
-                .Select(c => new CarDetailsServiceModel
-                {
-                    Id = c.Id,
-                    Brand = c.Brand,
-                    Model = c.Model,
-                    Year = c.Year,
-                    ImageUrl = c.Image,
-                    Description = c.Description,
-                    DealerId = c.DealerId,
-                    DealerName = c.Dealer.Name,
-                    UserId = c.Dealer.UserId
-                })
+                .ProjectTo<CarDetailsServiceModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefault();
         }
 
@@ -131,11 +125,19 @@ namespace Web_App_CarRentingSystem.Services.Cars
                 DealerId = dealerId
             };
 
+            // Log before adding the car to the database
+            Console.WriteLine("Adding car to database: Brand={0}, Model={1}, Year={2}, Image={3}, Description={4}, CategoryId={5}, DealerId={6}",
+                brand, model, year, imageUrl, description, categoryId, dealerId);
+
             this.data.Cars.Add(carData);
             this.data.SaveChanges();
 
+            // Log after successful save
+            Console.WriteLine("Car added to database successfully");
+
             return carData.Id;
         }
+
 
         public bool Edit(int id, string brand, string model, int year, string imageUrl, string description, int categoryId)
         {

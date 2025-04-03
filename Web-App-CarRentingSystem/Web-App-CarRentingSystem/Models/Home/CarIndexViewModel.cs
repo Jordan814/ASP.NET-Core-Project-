@@ -8,7 +8,7 @@
 
         public string Model { get; init; }
 
-        public string ImageUrl { get; init; }
+        public string Image { get; init; }
 
         public int Year { get; init; }
 

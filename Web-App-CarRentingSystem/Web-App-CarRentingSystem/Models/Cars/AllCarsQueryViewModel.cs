@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Web_App_CarRentingSystem.Services.Cars;
+using Web_App_CarRentingSystem.Services.Cars.Models;
 
 namespace Web_App_CarRentingSystem.Models.Cars
 {
