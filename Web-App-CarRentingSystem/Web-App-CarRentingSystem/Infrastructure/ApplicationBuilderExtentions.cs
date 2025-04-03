@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Web_App_CarRentingSystem.Data;
 using Web_App_CarRentingSystem.Data.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using static Web_App_CarRentingSystem.WebConstants;
+using static Web_App_CarRentingSystem.Areas.Admin.AdminConstants;
 
 namespace Web_App_CarRentingSystem.Infrastructure
 {

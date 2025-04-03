@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Web_App_CarRentingSystem.Data;
 using Web_App_CarRentingSystem.Models;
@@ -12,10 +14,12 @@ public class HomeController : Controller
 {
     private readonly IStatisticsService statistics;
     private readonly CarRentingDbContext data;
+    private readonly IMapper mapper;
 
     public HomeController(IStatisticsService statistics,
-        CarRentingDbContext data)
+        CarRentingDbContext data, IMapper mapper)
     {
+        this.mapper = mapper;
         this.statistics = statistics;
         this.data = data;
     }
@@ -25,14 +29,8 @@ public class HomeController : Controller
        
 
         var cars = this.data.Cars.OrderByDescending(c => c.Id)
-                 .Select(c => new CarIndexViewModel
-                 {
-                     Id = c.Id,
-                     Brand = c.Brand,
-                     Model = c.Model,
-                     Year = c.Year,
-                     ImageUrl = c.Image,
-                 }).Take(3)
+                 .ProjectTo<CarIndexViewModel>(this.mapper.ConfigurationProvider)
+                 .Take(3)
                  .ToList();
 
         var totalStatistics = this.statistics.Total();  

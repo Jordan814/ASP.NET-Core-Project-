@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Web_App_CarRentingSystem.Data.Models;
-using Web_App_CarRentingSystem.Services.Cars;
+using Web_App_CarRentingSystem.Services.Cars.Models;
 using static Web_App_CarRentingSystem.Data.DataConstants;
 
 namespace Web_App_CarRentingSystem.Models.Cars

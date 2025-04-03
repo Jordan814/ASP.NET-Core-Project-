@@ -1,4 +1,5 @@
 ﻿using Web_App_CarRentingSystem.Models.Cars;
+using Web_App_CarRentingSystem.Services.Cars.Models;
 
 namespace Web_App_CarRentingSystem.Services.Cars
 {

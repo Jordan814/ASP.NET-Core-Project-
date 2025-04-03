@@ -35,7 +35,7 @@
         @if (firstCar != null)
         {
             <div class="carousel-item active">
-                <img src="@firstCar.ImageUrl" class="d-block w-100" alt="@firstCar.Brand @firstCar.Model">
+                <img src="@firstCar.Image" class="d-block w-100" alt="@firstCar.Brand @firstCar.Model">
                 <div class=" carousel-caption d-none d-md-block">
                     <h5>
                         <a asp-controller="Cars" asp-action="Details" asp-route-id="@firstCar.Id">@firstCar.Brand @firstCar.Model @firstCar.Year</a>
@@ -47,7 +47,7 @@
         @if (secondCar != null)
         {
             <div class="carousel-item ">
-                <img src="@secondCar.ImageUrl" class="d-block w-100" alt="@secondCar.Brand @secondCar.Model">
+                <img src="@secondCar.Image" class="d-block w-100" alt="@secondCar.Brand @secondCar.Model">
                 <div class=" carousel-caption d-none d-md-block">
                     <h5>
                         <a asp-controller="Cars" asp-action="Details" asp-route-id="@secondCar.Id">@secondCar.Brand @secondCar.Model @secondCar.Year</a>
@@ -59,7 +59,7 @@
         @if (thirdCar != null)
         {
             <div class="carousel-item ">
-                <img src="@thirdCar.ImageUrl" class="d-block w-100" alt="@thirdCar.Brand @thirdCar.Model">
+                <img src="@thirdCar.Image" class="d-block w-100" alt="@thirdCar.Brand @thirdCar.Model">
                 <div class=" carousel-caption d-none d-md-block">
                     <h5>
                         <a asp-controller="Cars" asp-action="Details" asp-route-id="@thirdCar.Id">@thirdCar.Brand @thirdCar.Model @thirdCar.Year</a>
