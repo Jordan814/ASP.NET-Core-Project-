@@ -1,4 +1,6 @@
-﻿namespace Web_App_CarRentingSystem.Models.Home
+﻿using Web_App_CarRentingSystem.Services.Cars.Models;
+
+namespace Web_App_CarRentingSystem.Models.Home
 {
     public class IndexViewModel
     {
@@ -9,6 +11,6 @@
 
         public int TotalRents { get; init; }
 
-        public List<CarIndexViewModel> Cars { get; init; }
+        public IList<LatestCarServiceModel> Cars { get; init; }
     }
 }

@@ -14,6 +14,8 @@ namespace Web_App_CarRentingSystem.Services.Cars
 
         CarQueryServiceModel All(string brand, string searchTerm, CarSorting sorting, int currentPage, int carsPerPage);
 
+        IEnumerable<LatestCarServiceModel> Latest();
+
         CarDetailsServiceModel Details(int carId);
 
         IEnumerable<CarServiceModel> ByUser(string userId);
