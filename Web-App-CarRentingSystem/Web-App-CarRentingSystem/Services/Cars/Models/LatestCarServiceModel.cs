@@ -1,6 +1,6 @@
-﻿namespace Web_App_CarRentingSystem.Models.Home
+﻿namespace Web_App_CarRentingSystem.Services.Cars.Models
 {
-    public class CarIndexViewModel
+    public class LatestCarServiceModel
     {
         public int Id { get; init; }
 

@@ -166,5 +166,13 @@ namespace Web_App_CarRentingSystem.Services.Cars
         {
             return this.data.Cars.Any(c => c.Id == carId && c.DealerId == dealerId);
         }
+
+        public IEnumerable<LatestCarServiceModel> Latest()
+        {
+            return this.data.Cars.OrderByDescending(c => c.Id)
+                 .ProjectTo<LatestCarServiceModel>(this.mapper.ConfigurationProvider)
+                 .Take(3)
+                 .ToList();
+        }
     }
 }
